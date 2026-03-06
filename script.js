@@ -1,35 +1,55 @@
 const dino = document.getElementById("dino")
 const rock = document.getElementById("rock")
 const score = document.getElementById("score")
+const startButton = document.getElementById("startButton")
 
-score.innerText = parseInt(score.innerText) + 2
+let gameStarted = false
+let gameOver = false
+let scoreInterval
+
+score.innerText = 0
 
 function jump() {
-  dino.classList.add("jump-animation")
-  setTimeout(() => dino.classList.remove("jump-animation"), 500)
+  if (!gameStarted || gameOver) return
+
+  if (!dino.classList.contains("jump-animation")) {
+    dino.classList.add("jump-animation")
+    setTimeout(() => dino.classList.remove("jump-animation"), 1000)
+  }
 }
 
-document.addEventListener("keypress", (event) => {       
-  if (!dino.classList.contains("jump-animation")) {
-    jump()
-  }
-})
+document.addEventListener("keypress", () => jump())
 
-setInterval(() => {
-  const dinoTop = parseInt(
-    window.getComputedStyle(dino).getPropertyValue("top"),
-  )
-  const rockLeft = parseInt(
-    window.getComputedStyle(rock).getPropertyValue("left"),
-  )
-  score.innerText++
+function startGame() {
+  if (gameStarted) return
 
-  if (rockLeft < 0) {
-    rock.style.display = "none"
-  } else {
-    rock.style.display = ""
-  }
+  gameStarted = true
+  gameOver = false
+  score.innerText = 0
 
-  if (rockLeft < 50 && rockLeft > 0 && dinoTop > 150) {
-  }
-}, 50)
+  rock.style.display = "block"
+  rock.classList.add("rock-animation")
+  startButton.style.display = "none"
+
+  scoreInterval = setInterval(() => {
+    const dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"))
+    const rockLeft = parseInt(window.getComputedStyle(rock).getPropertyValue("left"))
+
+    score.innerText = Number(score.innerText) + 1
+
+    // Kollision prüfen
+    if (rockLeft < 60 && rockLeft > 0 && dinoTop >= 160) {
+      clearInterval(scoreInterval)
+      rock.classList.remove("rock-animation")
+      gameStarted = false
+      gameOver = true
+      startButton.style.display = "block"
+
+      const gameOverMessage = document.getElementById("gameOverMessage")
+      gameOverMessage.style.display = "block"
+    }
+
+  }, 50)
+}
+
+startButton.addEventListener("click", startGame)
