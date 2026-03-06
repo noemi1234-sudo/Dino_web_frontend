@@ -1,36 +1,58 @@
 #score {
   text-align: center;
 }
+ 
+#startButton {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;                 
+  background-color: #FF69B4;   
+  border: none;                 
+  border-radius: 10px;          
+  cursor: pointer;
+  transition: background 0.3s;  
+}
 
+#startButton:hover {
+  background-color: #FF85C1;    
+}
+ 
 #game {
   width: 600px;
   height: 300px;
   border: 2px solid black;
   margin: auto;
-  background-image: url("https://i.postimg.cc/DwRSnBFB/web-frontend.jpg");
+  background-image: url("https://i.postimg.cc/zfMFmnPv/background.jpg");
   background-size: cover;
+  overflow: hidden;
 }
-
+ 
 #dino {
   height: 75px;
   width: 75px;
   top: 225px;
   position: relative;
-  background-image: url("https://i.postimg.cc/mZ3p955N/dino.png");
+  background-image: url("https://i.postimg.cc/7YY92Y7v/dino.png");
   background-size: cover;
 }
-
+ 
 #rock {
   width: 50px;
   height: 50px;
   position: relative;
   top: 175px;
   left: 550px;
-  background-image: url("https://i.postimg.cc/XNCMZLfN/rock.pngg");
+  background-image: url("https://i.postimg.cc/9XR2dCjN/rock-(1).png");
   background-size: cover;
-  animation: rock 1.33s infinite;
 }
-
+ 
+.rock-animation {
+  animation: rock 1.33s infinite linear;
+}
+ 
 @keyframes rock {
   0% {
     left: 550px;
@@ -39,11 +61,11 @@
     left: -50px;
   }
 }
-
+ 
 .jump-animation {
   animation: jump 1s;
 }
-
+ 
 @keyframes jump {
   0% {
     top: 225px;
@@ -57,4 +79,19 @@
   100% {
     top: 225px;
   }
+}
+
+#gameOverMessage {
+  display: none;             
+  position: absolute;          
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  color: #FF1493;            
+  font-weight: bold;
+  z-index: 10;
+
+  font-family: sans-serif;
+  text-transform: uppercase;
 }
